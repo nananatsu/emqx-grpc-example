@@ -1,0 +1,24 @@
+pipeline {
+  agent {
+    kubernetes {
+      label 'go1.17'
+    }
+
+  }
+  stages {
+    stage('编译') {
+      agent none
+      steps {
+        container('golang') {
+
+            sh '''go build -o ./build/bin cmd/emqx_grpc.go 
+                  nerdctl build -t emqx-grpc:latest -f build/Dockerfile .
+            '''
+
+        }
+
+      }
+    }
+
+  }
+}

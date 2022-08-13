@@ -1,0 +1,14 @@
+grpc:
+  bindAddress: :9001
+
+emqx:
+  adapterServer: 127.0.0.1:9100
+
+kafka:
+  server: 
+    - kafka-0-external.kafka.svc.cluster.local:9094
+    - kafka-1-external.kafka.svc.cluster.local:9094
+    - kafka-2-external.kafka.svc.cluster.local:9094
+  msgTemplate: "{{ .Topic }}###{{ .Payload }}##{{ .Timestamp }}"
+  topic:
+    ^http/.*: http
